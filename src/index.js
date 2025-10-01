@@ -11,3 +11,25 @@ fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/service
     .then(function(response) {
         console.log(response);
     });
+
+class weatherRequest {
+    constructor(location, date1='', date2='') {
+        this.location = location;
+        this.date1 = date1;
+        this.date2 = date2;
+    };
+
+    emptyVariableCheck() {
+        if (this.date1) {
+            console.log("Date1 exists");
+        }
+
+        else {
+            console.log("Date1 does not exist");
+        }
+    
+};
+}
+
+let test = new weatherRequest(location);
+test.emptyVariableCheck();
