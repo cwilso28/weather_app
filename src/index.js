@@ -12,6 +12,20 @@ fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/service
         console.log(response);
     });
 
+class apiRequest {
+    constructor(url, save = true) {
+        this.url = url;
+        this.save = save;
+    };
+
+    fetchRequest() {
+        fetch(url)
+            .then(function(response) {
+                return response.json();
+            })
+    }
+}
+
 class weatherRequest {
     constructor(location, date1='', date2='') {
         this.location = location;
