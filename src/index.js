@@ -2,23 +2,47 @@ import "./styles.css"
 
 import { api_key } from './config.js'
 
+
 let location = '68521'
 
-fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/?key=${api_key}`)
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(response) {
-        console.log(response);
-    });
+let url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/?key=${api_key}`
 
+// fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/?key=${api_key}`)
+//     .then(function(response) {
+//         return response.json();
+//     })
+//     .then(function(response) {
+//         console.log(response);
+//     });
 
-function apiRequest(url) {
-    fetch(url)
-        .then(function(response) {
-            return response.json();
-        });
-}
+async function apiRequest(url, save = true) {
+    let response = await fetch(url)
+    console.log("API fetch request sent.")
+    
+    if (response.ok) {
+        let responseJSON = await response.json();
+
+        if (save) {
+            localStorage.apiResponse = JSON.stringify(responseJSON);
+        };
+
+        return responseJSON;
+    };
+};
+
+function loadJSON() {
+    if (localStorage.apiResponse) {
+        console.log("Data read from storage");
+        return JSON.parse(localStorage.getItem("apiResponse"));
+    }
+    else {
+        console.log("API query executed");
+        return apiRequest(url);
+    };
+};
+
+let response = loadJSON();
+console.log(response);
 
 class weatherRequest {
     constructor(location, date1='', date2='') {
@@ -39,5 +63,5 @@ class weatherRequest {
 };
 }
 
-let test = new weatherRequest(location);
-test.emptyVariableCheck();
+// let test = new weatherRequest(location);
+// test.emptyVariableCheck();
