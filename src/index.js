@@ -47,6 +47,7 @@ class weatherRequest {
         this.date1 = date1;
         this.date2 = date2;
         this.dev = dev;
+        this.url = this.createURL();
     };
 
     createURL() {
@@ -55,16 +56,6 @@ class weatherRequest {
         return `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${parameterString}/?key=${api_key}`
     }
 
-    emptyVariableCheck() {
-        if (this.date1) {
-            console.log("Date1 exists");
-        }
-
-        else {
-            console.log("Date1 does not exist");
-        }
-    
-};
 }
 
 let test = new weatherRequest(location);
