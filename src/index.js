@@ -54,12 +54,11 @@ class weatherRequest {
         let parameterArray = [this.location, this.date1, this.date2];
         let parameterString = parameterArray.filter(Boolean).join("/");
         let url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${parameterString}?key=${api_key}`;
-        console.log(url);
         return url;
     };
 
-    requestData() {
-        let weatherData = loadJSON(this.url);
+    async requestData() {
+        let weatherData = await loadJSON(this.url);
         localStorage.clear();
 
         if (this.dev && !localStorage.apiResponse) {
@@ -77,7 +76,7 @@ let devRequestArray = {location: location,
                        };
 
 let test = new weatherRequest(devRequestArray);
-console.log(test.requestData());
+test.requestData();
 
 // let test2 = apiRequest(url);
 // console.log(test2);
