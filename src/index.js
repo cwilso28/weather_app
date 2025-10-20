@@ -48,6 +48,7 @@ class weatherRequest {
         this.date2 = date2;
         this.dev = dev;
         this.url = this.createURL();
+        this.data = this.requestData();
     };
 
     createURL() {
@@ -69,14 +70,20 @@ class weatherRequest {
     }
 
 }
+
+function processData(JSONdata) {
+    pass;
+}
+
 let devRequestArray = {location: location,
                        date1: '',
                        date2: '',
                        dev: true
                        };
 
-let test = new weatherRequest(devRequestArray);
-test.requestData();
+async function main() {
+    let test = new weatherRequest(devRequestArray);
+    console.log(await test.data)
+}
 
-// let test2 = apiRequest(url);
-// console.log(test2);
+main();
