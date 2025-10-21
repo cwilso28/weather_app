@@ -71,8 +71,15 @@ class weatherRequest {
 
 }
 
+function convertEpochToDate(epochTime) {
+    return new Date(epochTime * 1000);
+}
+
 function processData(JSONdata) {
-    pass;
+    let location = JSONdata.resolvedAddress;
+    console.log(location)
+    let date = convertEpochToDate(JSONdata.currentConditions.datetimeEpoch);
+    console.log(date);
 }
 
 let devRequestArray = {location: location,
@@ -82,8 +89,9 @@ let devRequestArray = {location: location,
                        };
 
 async function main() {
-    let test = new weatherRequest(devRequestArray);
-    console.log(await test.data)
+    let request = new weatherRequest(devRequestArray);
+    let requestData = await request.data;
+    processData(requestData);
 }
 
 main();
