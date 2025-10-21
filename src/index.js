@@ -78,8 +78,14 @@ function convertEpochToDate(epochTime) {
 function processData(JSONdata) {
     let location = JSONdata.resolvedAddress;
     console.log(location)
+    console.log(JSONdata.currentConditions)
+    let temp = JSONdata.currentConditions.temp;
+    let humidity = JSONdata.currentConditions.humidity
+    console.log(`${temp} ${String.fromCharCode(176)}F`);
+    
     let date = convertEpochToDate(JSONdata.currentConditions.datetimeEpoch);
     console.log(date);
+
 }
 
 let devRequestArray = {location: location,
