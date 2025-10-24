@@ -77,9 +77,11 @@ function convertEpochToDate(epochTime) {
 
 function processData(JSONdata) {
     let location = JSONdata.resolvedAddress;
+    let tempPrintout = document.getElementById('temp');
     console.log(location)
     console.log(JSONdata.currentConditions)
     let temp = JSONdata.currentConditions.temp;
+    tempPrintout.textContent = `Temp: ${temp} ${String.fromCharCode(176)}F`;
     let humidity = JSONdata.currentConditions.humidity
     console.log(`${temp} ${String.fromCharCode(176)}F`);
     
