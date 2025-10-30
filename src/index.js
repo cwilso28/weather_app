@@ -17,7 +17,7 @@ let url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/ser
 
 async function apiRequest(url) {
     let response = await fetch(url)
-    console.log("API fetch request sent.")
+    console.log("[INFO] API fetch request sent.")
     
     if (response.ok) {
         let responseJSON = await response.json();
@@ -32,11 +32,11 @@ function saveJSON(json) {
 
 function loadJSON(url) {
     if (localStorage.apiResponse) {
-        console.log("Data read from storage");
+        console.log("[INFO] Data read from storage");
         return JSON.parse(localStorage.getItem("apiResponse"));
     }
     else {
-        console.log("API query executed");
+        console.log("[INFO] API query executed");
         return apiRequest(url);
     };
 };
@@ -98,7 +98,11 @@ function processData(JSONdata) {
     let date = convertEpochToDate(JSONdata.currentConditions.datetimeEpoch);
     dateTimeOut.textContent = date;
 
-    processTodayHourly(JSONdata.days[0].hours[20]);
+    for (let i = 0;i < JSONdata.days[0].hours.length;i++) {
+        let hourWeather = JSONdata.days[0].hours[i];
+        processTodayHourly(hourWeather);
+    }
+    // processTodayHourly(JSONdata.days[0].hours[20]);
 }
 
 function prettyHour(dateTime) {
