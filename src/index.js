@@ -98,21 +98,23 @@ function processData(JSONdata) {
     let date = convertEpochToDate(JSONdata.currentConditions.datetimeEpoch);
     dateTimeOut.textContent = date;
 
-    processTodayHourly(JSONdata.days[0].hours[3]);
+    processTodayHourly(JSONdata.days[0].hours[20]);
 }
 
-function prettyHour(time) {
-
+function prettyHour(dateTime) {
+    return format(dateTime, 'h a')
 };
 
 function processTodayHourly(hourData) {
-    let date = hourData.datetime;
+    let epoch = hourData.datetimeEpoch;
+    let dateTime = convertEpochToDate(epoch);
     let temp = hourData.temp;
+    let time = prettyHour(dateTime);
 
     let hourlyContainerBar = document.getElementById('hourly-container');
     let hourContainer = document.createElement('div');
     let dateContainer = document.createElement('div');
-    dateContainer.textContent = date;
+    dateContainer.textContent = time;
     let tempContainer = document.createElement('div');
     tempContainer.textContent = temp;
     hourContainer.append(dateContainer);
