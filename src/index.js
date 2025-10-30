@@ -112,16 +112,27 @@ function prettyHour(dateTime) {
 function processTodayHourly(hourData) {
     let epoch = hourData.datetimeEpoch;
     let dateTime = convertEpochToDate(epoch);
-    let temp = hourData.temp;
     let time = prettyHour(dateTime);
+
+    let temp = hourData.temp;
+
+    let icon = hourData.icon;
 
     let hourlyContainerBar = document.getElementById('hourly-container');
     let hourContainer = document.createElement('div');
+  
+
     let dateContainer = document.createElement('div');
     dateContainer.textContent = time;
+
     let tempContainer = document.createElement('div');
     tempContainer.textContent = temp;
+
+    let iconContainer = document.createElement('div');
+    iconContainer.textContent = icon;
+
     hourContainer.append(dateContainer);
+    hourContainer.append(iconContainer);
     hourContainer.append(tempContainer);
     hourlyContainerBar.append(hourContainer);
 }
