@@ -1,7 +1,7 @@
 import "./styles.css"
 
 import { api_key } from './config.js'
-
+import { format } from 'date-fns';
 
 let location = '68521'
 
@@ -98,6 +98,26 @@ function processData(JSONdata) {
     let date = convertEpochToDate(JSONdata.currentConditions.datetimeEpoch);
     dateTimeOut.textContent = date;
 
+    processTodayHourly(JSONdata.days[0].hours[3]);
+}
+
+function prettyHour(time) {
+
+};
+
+function processTodayHourly(hourData) {
+    let date = hourData.datetime;
+    let temp = hourData.temp;
+
+    let hourlyContainerBar = document.getElementById('hourly-container');
+    let hourContainer = document.createElement('div');
+    let dateContainer = document.createElement('div');
+    dateContainer.textContent = date;
+    let tempContainer = document.createElement('div');
+    tempContainer.textContent = temp;
+    hourContainer.append(dateContainer);
+    hourContainer.append(tempContainer);
+    hourlyContainerBar.append(hourContainer);
 }
 
 let devRequestArray = {location: location,
