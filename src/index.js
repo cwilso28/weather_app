@@ -120,6 +120,7 @@ function processTodayHourly(hourData) {
 
     let hourlyContainerBar = document.getElementById('hourly-container');
     let hourContainer = document.createElement('div');
+    hourContainer.className = "hour-container"
   
 
     let dateContainer = document.createElement('div');
