@@ -2,3 +2,19 @@
   border: solid 1px black;
   margin: 0px;
 }
+
+.hour-container {
+  /* border: solid 1px red; */
+  width: 100px;
+  aspect-ratio: 7/8;
+}
+
+#hourly-container {
+  border: solid 1px red;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(24, 1fr);
+  overflow-x: scroll;
+  gap: 2px;
+  /* width: 2400px; */
+}
