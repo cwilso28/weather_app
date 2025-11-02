@@ -98,16 +98,32 @@ function processData(JSONdata) {
     let date = convertEpochToDate(JSONdata.currentConditions.datetimeEpoch);
     dateTimeOut.textContent = date;
 
-    for (let i = 0;i < JSONdata.days[0].hours.length;i++) {
-        let hourWeather = JSONdata.days[0].hours[i];
+    let twentyFourHourData = compileTodayHourly(JSONdata);
+    
+    for (let i = 0;i < twentyFourHourData.length;i++) {
+        let hourWeather = twentyFourHourData[i];
         processTodayHourly(hourWeather);
     }
+
+    
     // processTodayHourly(JSONdata.days[0].hours[20]);
 }
 
 function prettyHour(dateTime) {
     return format(dateTime, 'h a')
 };
+
+function compileTodayHourly(JSONdata) {
+    let day0Hours = JSONdata.days[0].hours;
+    let day1Hours = JSONdata.days[1].hours;
+    let twoDayHourly = day0Hours.concat(day1Hours);
+    let currentDateTimeEpoch = JSONdata.currentConditions.datetimeEpoch;
+    let twentyFourHoursLater = currentDateTimeEpoch + (24*60*60);
+
+    let filteredTwoDayHourly = twoDayHourly.filter((hour) => (hour.datetimeEpoch < twentyFourHoursLater) && (hour.datetimeEpoch > currentDateTimeEpoch));
+
+    return filteredTwoDayHourly
+}
 
 function processTodayHourly(hourData) {
     let epoch = hourData.datetimeEpoch;
