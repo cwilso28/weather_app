@@ -3,6 +3,10 @@
   margin: 0px;
 }
 
+body {
+  padding: 5px;
+}
+
 .hour-container {
   /* border: solid 1px red; */
   width: 100px;
