@@ -80,6 +80,10 @@ function processData(JSONdata) {
     let locationOut = document.getElementById('location-container');
     locationOut.textContent = location;
 
+    let conditionIcon = document.getElementById('today-icon')
+    let iconDescription = JSONdata.currentConditions.icon;
+    conditionIcon.textContent = iconDescription;
+
     let tempPrintout = document.getElementById('today-temp');
     let temp = JSONdata.currentConditions.temp;
     tempPrintout.textContent = `Temp: ${temp} ${String.fromCharCode(176)}F`;
