@@ -109,8 +109,10 @@ function processData(JSONdata) {
         processTodayHourly(hourWeather);
     }
 
+    for (let i = 1;i <= 7; i++) {
+        processForecast(JSONdata.days[i]);
+    }
     
-    // processTodayHourly(JSONdata.days[0].hours[20]);
 }
 
 function prettyHour(dateTime) {
@@ -156,6 +158,31 @@ function processTodayHourly(hourData) {
     hourContainer.append(iconContainer);
     hourContainer.append(tempContainer);
     hourlyContainerBar.append(hourContainer);
+}
+
+function processForecast(day) {
+    let forecastContainer = document.getElementById('forecast-container');
+
+    let dailyForecastContainer = document.createElement('div');
+    dailyForecastContainer.className = 'daily-forecast-container';
+
+    let forecastDateOut = document.createElement('div');
+    let dateTime = convertEpochToDate(day.datetimeEpoch);
+    forecastDateOut.textContent = dateTime;
+
+    let forecastHiOut = document.createElement('div');
+    let forecastHi = day.tempmax;
+    forecastHiOut.textContent = `Hi: ${forecastHi} ${String.fromCharCode(176)}F`;
+
+    let forecastLoOut = document.createElement('div');
+    let forecastLo = day.tempmin;
+    forecastLoOut.textContent = `Lo: ${forecastLo} ${String.fromCharCode(176)}F`;
+
+    dailyForecastContainer.append(forecastDateOut);
+    dailyForecastContainer.append(forecastHiOut);
+    dailyForecastContainer.append(forecastLoOut);
+    
+    forecastContainer.append(dailyForecastContainer);
 }
 
 let devRequestArray = {location: location,
