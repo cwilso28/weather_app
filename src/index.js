@@ -100,7 +100,8 @@ function processData(JSONdata) {
     
     let dateTimeOut = document.getElementById('dateTime-container')
     let date = convertEpochToDate(JSONdata.currentConditions.datetimeEpoch);
-    dateTimeOut.textContent = date;
+    let formattedDate = prettyDay(date);
+    dateTimeOut.textContent = formattedDate;
 
     let twentyFourHourData = compileTodayHourly(JSONdata);
     
@@ -118,6 +119,14 @@ function processData(JSONdata) {
 function prettyHour(dateTime) {
     return format(dateTime, 'h a')
 };
+
+function prettyDay(dateTime) {
+    return format(dateTime, "EEEE',' MMMM d',' yyyy")
+}
+
+function prettyDateAndTime(dateTime) {
+    return format(dateTime, "EEEE',' MMMM d',' yyyy h':'m a")
+}
 
 function compileTodayHourly(JSONdata) {
     let day0Hours = JSONdata.days[0].hours;
@@ -168,7 +177,8 @@ function processForecast(day) {
 
     let forecastDateOut = document.createElement('div');
     let dateTime = convertEpochToDate(day.datetimeEpoch);
-    forecastDateOut.textContent = dateTime;
+    let formattedDateTime = prettyDay(dateTime);
+    forecastDateOut.textContent = formattedDateTime;
 
     let forecastHiOut = document.createElement('div');
     let forecastHi = day.tempmax;
