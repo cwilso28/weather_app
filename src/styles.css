@@ -14,7 +14,7 @@ body {
 }
 
 #hourly-container {
-  border: solid 1px red;
+  /* border: solid 1px red; */
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: repeat(24, 1fr);
