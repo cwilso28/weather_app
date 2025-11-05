@@ -22,3 +22,22 @@ body {
   gap: 2px;
   /* width: 2400px; */
 }
+
+.forecast-info {
+  /* border:solid 1px red; */
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+#additional-info-container{
+  /* border: solid 1px red; */
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+#forecast-container {
+  border: solid 1px red;
+  display: grid;
+  grid-template-rows: auto;
+  gap: 5px;
+}
