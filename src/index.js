@@ -180,6 +180,17 @@ function processForecast(day) {
     let formattedDateTime = prettyDay(dateTime);
     forecastDateOut.textContent = formattedDateTime;
 
+    let forecastInfoContainer = document.createElement('div');
+    forecastInfoContainer.className = 'forecast-info';
+
+    let forecastIconContainer = document.createElement('div');
+    forecastIconContainer.className = 'forecast-icon';
+    let forecastIcon = day.icon;
+    forecastIconContainer.textContent = forecastIcon;
+    
+    let forecastTempContainer = document.createElement('div');
+    forecastTempContainer.className = 'forecast-temps';
+
     let forecastHiOut = document.createElement('div');
     let forecastHi = day.tempmax;
     forecastHiOut.textContent = `Hi: ${forecastHi} ${String.fromCharCode(176)}F`;
@@ -188,9 +199,14 @@ function processForecast(day) {
     let forecastLo = day.tempmin;
     forecastLoOut.textContent = `Lo: ${forecastLo} ${String.fromCharCode(176)}F`;
 
+    forecastTempContainer.append(forecastHiOut);
+    forecastTempContainer.append(forecastLoOut);
+
+    forecastInfoContainer.append(forecastIconContainer);
+    forecastInfoContainer.append(forecastTempContainer);
+
     dailyForecastContainer.append(forecastDateOut);
-    dailyForecastContainer.append(forecastHiOut);
-    dailyForecastContainer.append(forecastLoOut);
+    dailyForecastContainer.append(forecastInfoContainer);
     
     forecastContainer.append(dailyForecastContainer);
 }
