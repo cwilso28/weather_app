@@ -17,7 +17,7 @@ body {
   /* border: solid 1px red; */
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: repeat(24, 1fr);
+  grid-template-columns: repeat(27, 1fr);
   overflow-x: scroll;
   gap: 2px;
   /* width: 2400px; */
@@ -36,7 +36,7 @@ body {
 }
 
 #forecast-container {
-  border: solid 1px red;
+  /* border: solid 1px red; */
   display: grid;
   grid-template-rows: auto;
   gap: 5px;
