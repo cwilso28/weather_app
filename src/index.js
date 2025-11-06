@@ -120,6 +120,10 @@ function prettyHour(dateTime) {
     return format(dateTime, 'h a')
 };
 
+function prettyHourLong(dateTime) {
+    return format(dateTime, 'h:mm a')
+}
+
 function prettyDay(dateTime) {
     return format(dateTime, "EEEE',' MMMM d',' yyyy")
 }
@@ -128,14 +132,51 @@ function prettyDateAndTime(dateTime) {
     return format(dateTime, "EEEE',' MMMM d',' yyyy h':'m a")
 }
 
+function makeEventIntoHourFormat(event, epoch, icon){
+    return {status: event, datetimeEpoch: epoch, icon:icon}
+}
+
+function compare(a, b) {
+    if (a.datetimeEpoch < b.datetimeEpoch) {
+        return -1;
+    }
+    if (a.datetimeEpoch > b.datetimeEpoch) {
+        return 1;
+    }
+    return 0;
+}
+
 function compileTodayHourly(JSONdata) {
     let day0Hours = JSONdata.days[0].hours;
     let day1Hours = JSONdata.days[1].hours;
     let twoDayHourly = day0Hours.concat(day1Hours);
+
+    let day0SunriseDesc = 'Sunrise';
+    let day0SunriseIcon = 'sunrise';
+    let day0SunriseEpoch = JSONdata.days[0].sunriseEpoch;
+    let day0SunriseHour = makeEventIntoHourFormat(day0SunriseDesc, day0SunriseEpoch, day0SunriseIcon);
+
+    let day0SunsetDesc = 'Sunset';
+    let day0SunsetIcon = 'sunset';
+    let day0SunsetEpoch = JSONdata.days[0].sunsetEpoch;
+    let day0SunsetHour = makeEventIntoHourFormat(day0SunsetDesc, day0SunsetEpoch, day0SunsetIcon);
+
+    let day1SunriseDesc = 'Sunrise';
+    let day1SunriseIcon = 'sunrise';
+    let day1SunriseEpoch = JSONdata.days[1].sunriseEpoch;
+    let day1SunriseHour = makeEventIntoHourFormat(day1SunriseDesc, day1SunriseEpoch, day1SunriseIcon);
+
+    let day1SunsetDesc = 'Sunset';
+    let day1SunsetIcon = 'sunset';
+    let day1SunsetEpoch = JSONdata.days[1].sunsetEpoch;
+    let day1SunsetHour = makeEventIntoHourFormat(day1SunsetDesc, day1SunsetEpoch, day1SunsetIcon);
+    let twoDayHourlySunriseSunset = twoDayHourly.concat(day0SunriseHour, day0SunsetHour, day1SunriseHour, day1SunsetHour);
+
     let currentDateTimeEpoch = JSONdata.currentConditions.datetimeEpoch;
     let twentyFourHoursLater = currentDateTimeEpoch + (24*60*60);
 
-    let filteredTwoDayHourly = twoDayHourly.filter((hour) => (hour.datetimeEpoch < twentyFourHoursLater) && (hour.datetimeEpoch > currentDateTimeEpoch));
+    let filteredTwoDayHourly = twoDayHourlySunriseSunset.filter((hour) => (hour.datetimeEpoch < twentyFourHoursLater) && (hour.datetimeEpoch > currentDateTimeEpoch));
+    filteredTwoDayHourly.sort( compare );
 
     return filteredTwoDayHourly
 }
@@ -144,8 +185,6 @@ function processTodayHourly(hourData) {
     let epoch = hourData.datetimeEpoch;
     let dateTime = convertEpochToDate(epoch);
     let time = prettyHour(dateTime);
-
-    let temp = hourData.temp;
 
     let icon = hourData.icon;
 
@@ -158,7 +197,20 @@ function processTodayHourly(hourData) {
     dateContainer.textContent = time;
 
     let tempContainer = document.createElement('div');
-    tempContainer.textContent = temp;
+    if (hourData.temp) {
+        let temp = hourData.temp;
+        tempContainer.textContent = `${temp} ${String.fromCharCode(176)}F`;
+    }
+
+    else{
+        let time = prettyHourLong(dateTime);
+        dateContainer.textContent = time;
+
+        let temp = hourData.status;
+        tempContainer.textContent = temp;
+    }
+    
+    
 
     let iconContainer = document.createElement('div');
     iconContainer.textContent = icon;
@@ -168,6 +220,8 @@ function processTodayHourly(hourData) {
     hourContainer.append(tempContainer);
     hourlyContainerBar.append(hourContainer);
 }
+
+
 
 function processForecast(day) {
     let forecastContainer = document.getElementById('forecast-container');
