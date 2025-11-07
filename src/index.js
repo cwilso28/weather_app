@@ -265,6 +265,10 @@ function processForecast(day) {
     forecastContainer.append(dailyForecastContainer);
 }
 
+function processAdditionalInfo(JSONdata) {
+    pass
+};
+
 let devRequestArray = {location: location,
                        date1: '',
                        date2: '',
