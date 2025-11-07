@@ -41,3 +41,7 @@ body {
   grid-template-rows: auto;
   gap: 5px;
 }
+
+#details-container {
+  border: solid 1px red;
+}
