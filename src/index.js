@@ -113,7 +113,8 @@ function processData(JSONdata) {
     for (let i = 0;i <= 7; i++) {
         processForecast(JSONdata.days[i]);
     }
-    
+
+    todayAdditionalInfo(JSONdata);    
 }
 
 function prettyHour(dateTime) {
@@ -265,7 +266,34 @@ function processForecast(day) {
     forecastContainer.append(dailyForecastContainer);
 }
 
-function processAdditionalInfo(JSONdata) {
+function todayAdditionalInfo(JSONdata) {
+    let currentConditions = JSONdata.currentConditions;
+    let temp = currentConditions.temp;
+    let feelsLikeTemp = currentConditions.feelslike;
+    let conditions = currentConditions.conditions;
+    let dateTimeEpoch = currentConditions.datetimeEpoch;
+    let dewPoint = currentConditions.dew;
+    let humidity = currentConditions.humidity;
+    let conditionsIcon = currentConditions.icon;
+    let precipProbability = currentConditions.precipprob;
+    let precipType = currentConditions.preciptype;
+    let sunriseEpoch = currentConditions.sunriseEpoch;
+    let sunsetEpoch = currentConditions.sunsetEpoch;
+    let windSpeed = currentConditions.windspeed;
+    let windDirection = currentConditions.winddir;
+    let windGust = currentConditions.windgust;
+    let UVIndex = currentConditions.uvindex;
+
+    let detailsContainer = document.getElementById('details-container');
+    let tempContainer = document.createElement('div');
+    let currentTempContainer = document.createElement('div');
+    currentTempContainer.textContent = temp;
+
+    tempContainer.append(currentTempContainer);
+    detailsContainer.append(tempContainer);
+};
+
+function forecastAdditionalInfo(day) {
     pass
 };
 
