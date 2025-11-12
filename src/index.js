@@ -266,10 +266,35 @@ function processForecast(day) {
     forecastContainer.append(dailyForecastContainer);
 }
 
+function tempLabeler(temp, metric = false) {
+    let labeledTemp = '';
+    
+    if (metric) {
+        labeledTemp = `${temp} ${String.fromCharCode(176)}C`
+    }
+    else {
+        labeledTemp = `${temp} ${String.fromCharCode(176)}F`
+    }
+
+    return labeledTemp
+};
+
 function todayAdditionalInfo(JSONdata) {
+    let detailsContainer = document.getElementById('details-container');
+    let tempContainer = document.createElement('div');
+
     let currentConditions = JSONdata.currentConditions;
+
+    let currentTempContainer = document.createElement('div');
     let temp = currentConditions.temp;
+    let tempText = `Current Temp: ${tempLabeler(temp, false)}`
+    currentTempContainer.textContent = tempText;
+
+    let feelsLikeTempContainer = document.createElement('div');
     let feelsLikeTemp = currentConditions.feelslike;
+    let feelsLikeTempText = `Feels like: ${tempLabeler(feelsLikeTemp, false)}`;
+    feelsLikeTempContainer.textContent = feelsLikeTempText;
+
     let conditions = currentConditions.conditions;
     let dateTimeEpoch = currentConditions.datetimeEpoch;
     let dewPoint = currentConditions.dew;
@@ -284,12 +309,8 @@ function todayAdditionalInfo(JSONdata) {
     let windGust = currentConditions.windgust;
     let UVIndex = currentConditions.uvindex;
 
-    let detailsContainer = document.getElementById('details-container');
-    let tempContainer = document.createElement('div');
-    let currentTempContainer = document.createElement('div');
-    currentTempContainer.textContent = temp;
-
     tempContainer.append(currentTempContainer);
+    tempContainer.append(feelsLikeTempContainer);
     detailsContainer.append(tempContainer);
 };
 
