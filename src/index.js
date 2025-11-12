@@ -75,7 +75,7 @@ function convertEpochToDate(epochTime) {
     return new Date(epochTime * 1000);
 }
 
-function processData(JSONdata) {
+function processData(JSONdata, metric = false) {
     let location = JSONdata.resolvedAddress;
     let locationOut = document.getElementById('location-container');
     locationOut.textContent = location;
@@ -86,15 +86,15 @@ function processData(JSONdata) {
 
     let tempPrintout = document.getElementById('today-temp');
     let temp = JSONdata.currentConditions.temp;
-    tempPrintout.textContent = `Temp: ${temp} ${String.fromCharCode(176)}F`;
+    tempPrintout.textContent = `Temp: ${tempLabeler(temp, metric)}`;
 
     let hiPrintOut = document.getElementById('today-hi');
     let hi = JSONdata.days[0].tempmax;
-    hiPrintOut.textContent = `Hi: ${hi} ${String.fromCharCode(176)}F`;
+    hiPrintOut.textContent = `Hi: ${tempLabeler(hi, metric)}`;
 
     let loPrintOut = document.getElementById('today-lo');
     let lo = JSONdata.days[0].tempmin;
-    loPrintOut.textContent = `Lo: ${lo} ${String.fromCharCode(176)}F`;
+    loPrintOut.textContent = `Lo: ${tempLabeler(lo, metric)}`;
 
     let humidity = JSONdata.currentConditions.humidity
     
@@ -107,14 +107,14 @@ function processData(JSONdata) {
     
     for (let i = 0;i < twentyFourHourData.length;i++) {
         let hourWeather = twentyFourHourData[i];
-        processTodayHourly(hourWeather);
+        processTodayHourly(hourWeather, metric);
     }
 
     for (let i = 0;i <= 7; i++) {
-        processForecast(JSONdata.days[i]);
+        processForecast(JSONdata.days[i], metric);
     }
 
-    todayAdditionalInfo(JSONdata);    
+    todayAdditionalInfo(JSONdata, metric);    
 }
 
 function prettyHour(dateTime) {
@@ -182,7 +182,7 @@ function compileTodayHourly(JSONdata) {
     return filteredTwoDayHourly
 }
 
-function processTodayHourly(hourData) {
+function processTodayHourly(hourData, metric = false) {
     let epoch = hourData.datetimeEpoch;
     let dateTime = convertEpochToDate(epoch);
     let time = prettyHour(dateTime);
@@ -200,7 +200,7 @@ function processTodayHourly(hourData) {
     let tempContainer = document.createElement('div');
     if (hourData.temp) {
         let temp = hourData.temp;
-        tempContainer.textContent = `${temp} ${String.fromCharCode(176)}F`;
+        tempContainer.textContent = `${tempLabeler(temp, metric)}`;
     }
 
     else{
@@ -224,7 +224,7 @@ function processTodayHourly(hourData) {
 
 
 
-function processForecast(day) {
+function processForecast(day, metric=false) {
     let forecastContainer = document.getElementById('forecast-container');
 
     let dailyForecastContainer = document.createElement('div');
@@ -248,11 +248,11 @@ function processForecast(day) {
 
     let forecastHiOut = document.createElement('div');
     let forecastHi = day.tempmax;
-    forecastHiOut.textContent = `Hi: ${forecastHi} ${String.fromCharCode(176)}F`;
+    forecastHiOut.textContent = `Hi: ${tempLabeler(forecastHi, metric)}`;
 
     let forecastLoOut = document.createElement('div');
     let forecastLo = day.tempmin;
-    forecastLoOut.textContent = `Lo: ${forecastLo} ${String.fromCharCode(176)}F`;
+    forecastLoOut.textContent = `Lo: ${tempLabeler(forecastLo, metric)}`;
 
     forecastTempContainer.append(forecastHiOut);
     forecastTempContainer.append(forecastLoOut);
@@ -279,7 +279,7 @@ function tempLabeler(temp, metric = false) {
     return labeledTemp
 };
 
-function todayAdditionalInfo(JSONdata) {
+function todayAdditionalInfo(JSONdata, metric = false) {
     let detailsContainer = document.getElementById('details-container');
     let tempContainer = document.createElement('div');
 
@@ -287,12 +287,12 @@ function todayAdditionalInfo(JSONdata) {
 
     let currentTempContainer = document.createElement('div');
     let temp = currentConditions.temp;
-    let tempText = `Current Temp: ${tempLabeler(temp, false)}`
+    let tempText = `Current Temp: ${tempLabeler(temp, metric)}`
     currentTempContainer.textContent = tempText;
 
     let feelsLikeTempContainer = document.createElement('div');
     let feelsLikeTemp = currentConditions.feelslike;
-    let feelsLikeTempText = `Feels like: ${tempLabeler(feelsLikeTemp, false)}`;
+    let feelsLikeTempText = `Feels like: ${tempLabeler(feelsLikeTemp, metric)}`;
     feelsLikeTempContainer.textContent = feelsLikeTempText;
 
     let conditions = currentConditions.conditions;
@@ -327,7 +327,7 @@ let devRequestArray = {location: location,
 async function main() {
     let request = new weatherRequest(devRequestArray);
     let requestData = await request.data;
-    processData(requestData);
+    processData(requestData, true);
 }
 
 main();
