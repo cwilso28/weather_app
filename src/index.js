@@ -270,7 +270,8 @@ function tempLabeler(temp, metric = false) {
     let labeledTemp = '';
     
     if (metric) {
-        labeledTemp = `${temp} ${String.fromCharCode(176)}C`
+        let celsius = convertToCelsius(temp).toFixed(1);
+        labeledTemp = `${celsius} ${String.fromCharCode(176)}C`
     }
     else {
         labeledTemp = `${temp} ${String.fromCharCode(176)}F`
@@ -278,6 +279,11 @@ function tempLabeler(temp, metric = false) {
 
     return labeledTemp
 };
+
+function convertToCelsius(fahrenheit) {
+    let celsius = (fahrenheit - 32) * (5/9);
+    return celsius
+}
 
 function todayAdditionalInfo(JSONdata, metric = false) {
     let detailsContainer = document.getElementById('details-container');
