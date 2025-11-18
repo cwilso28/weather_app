@@ -111,7 +111,7 @@ function processData(JSONdata, metric = false) {
     }
 
     for (let i = 0;i <= 7; i++) {
-        processForecast(JSONdata.days[i], metric);
+        processForecast(JSONdata.days[i], i, metric);
     }
 
     todayAdditionalInfo(JSONdata, metric);    
@@ -224,11 +224,12 @@ function processTodayHourly(hourData, metric = false) {
 
 
 
-function processForecast(day, metric=false) {
+function processForecast(day, index, metric=false) {
     let forecastContainer = document.getElementById('forecast-container');
 
     let dailyForecastContainer = document.createElement('div');
     dailyForecastContainer.className = 'daily-forecast-container';
+    dailyForecastContainer.id = index;
 
     let forecastDateOut = document.createElement('div');
     let dateTime = convertEpochToDate(day.datetimeEpoch);
