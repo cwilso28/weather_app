@@ -288,9 +288,11 @@ function convertToCelsius(fahrenheit) {
 
 function todayAdditionalInfo(JSONdata, metric = false) {
     let detailsContainer = document.getElementById('details-container');
-    let tempContainer = document.createElement('div');
-
+    
     let currentConditions = JSONdata.currentConditions;
+
+    // Temperature Block
+    let tempContainer = document.createElement('div');
 
     let currentTempContainer = document.createElement('div');
     let temp = currentConditions.temp;
@@ -302,23 +304,48 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let feelsLikeTempText = `Feels like: ${tempLabeler(feelsLikeTemp, metric)}`;
     feelsLikeTempContainer.textContent = feelsLikeTempText;
 
-    let conditions = currentConditions.conditions;
+    // Wind Block
+    let windContainer = document.createElement('div');
+    
+    let windSpeedContainer = document.createElement('div');
+    let windSpeed = currentConditions.windspeed;
+    let windSpeedText = `Wind speed: ${windSpeed} mph`;
+    windSpeedContainer.textContent = windSpeedText;
+
+    let windDirContainer = document.createElement('div');
+    let windDir = currentConditions.winddir;
+    let windDirText = `Wind dirction: ${windDir}`;
+    windDirContainer.textContent = windDirText;
+
+    let windGustContainer = document.createElement('div');
+    let windGust = currentConditions.windgust;
+    let windGustText = `Wind Gusts: ${windGust} mph`;
+    windGustContainer.textContent = windGustText;
+
+    // Precipitation Block
+    let precipContainer = document.createElement('div');
+
     let dateTimeEpoch = currentConditions.datetimeEpoch;
     let dewPoint = currentConditions.dew;
     let humidity = currentConditions.humidity;
-    let conditionsIcon = currentConditions.icon;
     let precipProbability = currentConditions.precipprob;
     let precipType = currentConditions.preciptype;
     let sunriseEpoch = currentConditions.sunriseEpoch;
     let sunsetEpoch = currentConditions.sunsetEpoch;
-    let windSpeed = currentConditions.windspeed;
-    let windDirection = currentConditions.winddir;
-    let windGust = currentConditions.windgust;
     let UVIndex = currentConditions.uvindex;
+    let pressure = currentConditions.pressure;
+    let visibility = currentConditions.visibility;
 
     tempContainer.append(currentTempContainer);
     tempContainer.append(feelsLikeTempContainer);
+
+    windContainer.append(windSpeedContainer);
+    windContainer.append(windDirContainer);
+    windContainer.append(windGustContainer);
+    
     detailsContainer.append(tempContainer);
+    detailsContainer.append(windContainer);
+    detailsContainer.append(precipContainer);
 };
 
 function forecastAdditionalInfo(day) {
