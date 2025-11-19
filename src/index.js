@@ -309,12 +309,12 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     
     let windSpeedContainer = document.createElement('div');
     let windSpeed = currentConditions.windspeed;
-    let windSpeedText = `Wind speed: ${windSpeed} mph`;
+    let windSpeedText = `Wind Speed: ${windSpeed} mph`;
     windSpeedContainer.textContent = windSpeedText;
 
     let windDirContainer = document.createElement('div');
     let windDir = currentConditions.winddir;
-    let windDirText = `Wind dirction: ${windDir}`;
+    let windDirText = `Wind Direction: ${windDir}`;
     windDirContainer.textContent = windDirText;
 
     let windGustContainer = document.createElement('div');
@@ -325,11 +325,22 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     // Precipitation Block
     let precipContainer = document.createElement('div');
 
+    let precipProbabilityContainer = document.createElement('div');
+    let precipProbability = currentConditions.precipprob;
+    let precipProbabilityText = `Precipitation Probability: ${precipProbability}%`
+    precipProbabilityContainer.textContent = precipProbabilityText;
+
+    let precipTypeContainer = document.createElement('div');
+    let precipType = currentConditions.preciptype;
+    let precipTypeText = `Precipitation Type: ${precipType}`;
+    precipTypeContainer.textContent = precipTypeText;
+
+
     let dateTimeEpoch = currentConditions.datetimeEpoch;
     let dewPoint = currentConditions.dew;
     let humidity = currentConditions.humidity;
-    let precipProbability = currentConditions.precipprob;
-    let precipType = currentConditions.preciptype;
+    
+    
     let sunriseEpoch = currentConditions.sunriseEpoch;
     let sunsetEpoch = currentConditions.sunsetEpoch;
     let UVIndex = currentConditions.uvindex;
@@ -342,6 +353,9 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     windContainer.append(windSpeedContainer);
     windContainer.append(windDirContainer);
     windContainer.append(windGustContainer);
+
+    precipContainer.append(precipProbabilityContainer);
+    precipContainer.append(precipTypeContainer);
     
     detailsContainer.append(tempContainer);
     detailsContainer.append(windContainer);
