@@ -44,4 +44,14 @@ body {
 
 #details-container {
   border: solid 1px red;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* grid-template-rows: repeat(autofill, 90px); */
+  /* gap: 5px; */
+  padding-left: 5px;
+}
+
+.additional-info {
+  width: 200px;
+  height: 100px;
 }
