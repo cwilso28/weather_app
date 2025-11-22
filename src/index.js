@@ -293,6 +293,7 @@ function todayAdditionalInfo(JSONdata, metric = false) {
 
     // Temperature and Humidity Block
     let tempContainer = document.createElement('div');
+    tempContainer.className = 'additional-info';
 
     let currentTempContainer = document.createElement('div');
     let temp = currentConditions.temp;
@@ -311,6 +312,7 @@ function todayAdditionalInfo(JSONdata, metric = false) {
 
     // Wind Block
     let windContainer = document.createElement('div');
+    windContainer.className = 'additional-info';
     
     let windSpeedContainer = document.createElement('div');
     let windSpeed = currentConditions.windspeed;
@@ -329,6 +331,7 @@ function todayAdditionalInfo(JSONdata, metric = false) {
 
     // Precipitation Block
     let precipContainer = document.createElement('div');
+    precipContainer.className = 'additional-info';
 
     let precipProbabilityContainer = document.createElement('div');
     let precipProbability = currentConditions.precipprob;
@@ -343,6 +346,7 @@ function todayAdditionalInfo(JSONdata, metric = false) {
 
     // Other block
     let otherContainer = document.createElement('div');
+    otherContainer.className = 'additional-info';
 
     let UVIndexContainer = document.createElement('div');
     let UVIndex = currentConditions.uvindex;
