@@ -5,6 +5,8 @@
 
 body {
   padding: 5px;
+  max-width: 1200px;
+
 }
 
 .hour-container {
@@ -45,10 +47,13 @@ body {
 #details-container {
   border: solid 1px red;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  /* grid-template-rows: repeat(autofill, 90px); */
-  /* gap: 5px; */
-  padding-left: 5px;
+  /* grid-template-columns: repeat(auto-fit, 200px); */
+  grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
+  grid-auto-rows: 100px;
+  gap: 5px;
+  padding: 5px 0px 0px 5px;
+  overflow-y: scroll;
+  max-width: 600px;
 }
 
 .additional-info {
