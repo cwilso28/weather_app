@@ -288,8 +288,30 @@ function convertToCelsius(fahrenheit) {
 
 function todayAdditionalInfo(JSONdata, metric = false) {
     let detailsContainer = document.getElementById('details-container');
-    
+
     let currentConditions = JSONdata.currentConditions;
+    
+    // Header
+    let headerContainer = document.createElement('div');
+    headerContainer.className = 'additional-info';
+    
+    let dateContainer = document.createElement('div');
+    let dateText = 'Today';
+    dateContainer.textContent = dateText;
+
+    let sunriseContainer = document.createElement('div');
+    let sunrise = currentConditions.sunriseEpoch;
+    let sunriseDateTime = convertEpochToDate(sunrise);
+    let sunriseTimePretty = prettyHourLong(sunriseDateTime);
+    let sunriseText = `Sunrise: ${sunriseTimePretty}`;
+    sunriseContainer.textContent = sunriseText;
+
+    let sunsetContainer = document.createElement('div');
+    let sunset = currentConditions.sunsetEpoch;
+    let sunsetDateTime = convertEpochToDate(sunset);
+    let sunsetTimePretty = prettyHourLong(sunsetDateTime);
+    let sunsetText = `Sunrise: ${sunsetTimePretty}`;
+    sunsetContainer.textContent = sunsetText;
 
     // Temperature and Humidity Block
     let tempContainer = document.createElement('div');
@@ -368,6 +390,10 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let visibilityText = `Visibility: ${visibility} mi`;
     visibilityContainer.textContent = visibilityText;
 
+    headerContainer.append(dateContainer);
+    headerContainer.append(sunriseContainer);
+    headerContainer.append(sunsetContainer);
+
     tempContainer.append(currentTempContainer);
     tempContainer.append(feelsLikeTempContainer);
     tempContainer.append(humidityContainer);
@@ -384,6 +410,7 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     otherContainer.append(pressureContainer);
     otherContainer.append(visibilityContainer);
     
+    detailsContainer.append(headerContainer);
     detailsContainer.append(tempContainer);
     detailsContainer.append(windContainer);
     detailsContainer.append(precipContainer);
