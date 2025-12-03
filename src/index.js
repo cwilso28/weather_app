@@ -204,7 +204,7 @@ function processTodayHourly(hourData, metric = false) {
     }
 
     else{
-        let time = prettyHourLong(dateTime);
+        let time = sunriseSunsetFormat(epoch);
         dateContainer.textContent = time;
 
         let temp = hourData.status;
@@ -286,6 +286,18 @@ function convertToCelsius(fahrenheit) {
     return celsius
 }
 
+function createAndWriteDiv(text) {
+    let container = document.createElement('div');
+    container.textContent = text;
+    return container
+}
+
+function sunriseSunsetFormat(epoch) {
+    let eventDateTime = convertEpochToDate(epoch);
+    let eventPrettyTime = prettyHourLong(eventDateTime);
+    return eventPrettyTime
+}
+
 function todayAdditionalInfo(JSONdata, metric = false) {
     let detailsContainer = document.getElementById('details-container');
 
@@ -295,22 +307,19 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let headerContainer = document.createElement('div');
     headerContainer.className = 'additional-info';
     
-    let dateContainer = document.createElement('div');
     let dateText = 'Today';
-    dateContainer.textContent = dateText;
+    let dateContainer = createAndWriteDiv(dateText);
 
-    let sunriseContainer = document.createElement('div');
     let sunrise = currentConditions.sunriseEpoch;
-    let sunriseDateTime = convertEpochToDate(sunrise);
-    let sunriseTimePretty = prettyHourLong(sunriseDateTime);
+    let sunriseTimePretty = sunriseSunsetFormat(sunrise);
     let sunriseText = `Sunrise: ${sunriseTimePretty}`;
-    sunriseContainer.textContent = sunriseText;
+    let sunriseContainer = createAndWriteDiv(sunriseText);
 
     let sunsetContainer = document.createElement('div');
     let sunset = currentConditions.sunsetEpoch;
     let sunsetDateTime = convertEpochToDate(sunset);
     let sunsetTimePretty = prettyHourLong(sunsetDateTime);
-    let sunsetText = `Sunrise: ${sunsetTimePretty}`;
+    let sunsetText = `Sunset: ${sunsetTimePretty}`;
     sunsetContainer.textContent = sunsetText;
 
     // Temperature and Humidity Block
