@@ -328,23 +328,35 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let tempContainer = document.createElement('div');
     tempContainer.className = 'additional-info';
 
+    let temp_list = [];
+
     // let currentTempContainer = document.createElement('div');
-    let temp = currentConditions.temp;
-    let tempText = `Current Temp: ${tempLabeler(temp, metric)}`
-    let currentTempContainer = createAndWriteDiv(tempText);
+    // let temp = currentConditions.temp;
+    let tempText = `Current Temp: ${tempLabeler(currentConditions.temp, metric)}`;
+    temp_list.push(tempText);
+
+    // let currentTempContainer = createAndWriteDiv(tempText);
     // currentTempContainer.textContent = tempText;
 
     // let feelsLikeTempContainer = document.createElement('div');
-    let feelsLikeTemp = currentConditions.feelslike;
-    let feelsLikeTempText = `Feels like: ${tempLabeler(feelsLikeTemp, metric)}`;
+    // let feelsLikeTemp = currentConditions.feelslike;
+    let feelsLikeTempText = `Feels like: ${tempLabeler(currentConditions.feelslike, metric)}`;
     // feelsLikeTempContainer.textContent = feelsLikeTempText;
-    let feelsLikeTempContainer = createAndWriteDiv(feelsLikeTempText);
+    temp_list.push(feelsLikeTempText);
+
+    // let feelsLikeTempContainer = createAndWriteDiv(feelsLikeTempText);
 
     // let humidityContainer = document.createElement('div');
-    let humidity = currentConditions.humidity;
-    let humidityText = `Humidity: ${humidity}%`;
+    // let humidity = currentConditions.humidity;
+    let humidityText = `Humidity: ${currentConditions.humidity}%`;
     // humidityContainer.textContent = humidityText;
-    let humidityContainer = createAndWriteDiv(humidityText);
+    temp_list.push(humidityText);
+    // let humidityContainer = createAndWriteDiv(humidityText);
+
+    for (let i=0; i < temp_list.length; i++) {
+        let container = createAndWriteDiv(temp_list[i]);
+        tempContainer.append(container);
+    };
 
     // Wind Block
     let windContainer = document.createElement('div');
@@ -408,9 +420,9 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     headerContainer.append(sunriseContainer);
     headerContainer.append(sunsetContainer);
 
-    tempContainer.append(currentTempContainer);
-    tempContainer.append(feelsLikeTempContainer);
-    tempContainer.append(humidityContainer);
+    // tempContainer.append(currentTempContainer);
+    // tempContainer.append(feelsLikeTempContainer);
+    // tempContainer.append(humidityContainer);
 
     windContainer.append(windSpeedContainer);
     windContainer.append(windDirContainer);
