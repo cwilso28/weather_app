@@ -300,12 +300,14 @@ function sunriseSunsetFormat(epoch) {
 
 function todayAdditionalInfo(JSONdata, metric = false) {
     let detailsContainer = document.getElementById('details-container');
+    
 
     let currentConditions = JSONdata.currentConditions;
     
     // Header
     let headerContainer = document.createElement('div');
-    headerContainer.className = 'additional-info';
+    // headerContainer.className = 'additional-info';
+    headerContainer.id = 'additional-info-header';
     
     let dateText = 'Today';
     let dateContainer = createAndWriteDiv(dateText);
@@ -315,12 +317,13 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let sunriseText = `Sunrise: ${sunriseTimePretty}`;
     let sunriseContainer = createAndWriteDiv(sunriseText);
 
-    let sunsetContainer = document.createElement('div');
+    let dataContainer = document.createElement('div');
+    dataContainer.id = "additional-data-container";
+
     let sunset = currentConditions.sunsetEpoch;
-    let sunsetDateTime = convertEpochToDate(sunset);
-    let sunsetTimePretty = prettyHourLong(sunsetDateTime);
+    let sunsetTimePretty = sunriseSunsetFormat(sunset);
     let sunsetText = `Sunset: ${sunsetTimePretty}`;
-    sunsetContainer.textContent = sunsetText;
+    let sunsetContainer = createAndWriteDiv(sunsetText);
 
     // Temperature and Humidity Block
     let tempContainer = document.createElement('div');
@@ -419,11 +422,17 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     otherContainer.append(pressureContainer);
     otherContainer.append(visibilityContainer);
     
+    dataContainer.append(tempContainer);
+    dataContainer.append(windContainer);
+    dataContainer.append(precipContainer);
+    dataContainer.append(otherContainer);
+
     detailsContainer.append(headerContainer);
-    detailsContainer.append(tempContainer);
-    detailsContainer.append(windContainer);
-    detailsContainer.append(precipContainer);
-    detailsContainer.append(otherContainer);
+    detailsContainer.append(dataContainer);
+    // detailsContainer.append(tempContainer);
+    // detailsContainer.append(windContainer);
+    // detailsContainer.append(precipContainer);
+    // detailsContainer.append(otherContainer);
 };
 
 function forecastAdditionalInfo(day) {
