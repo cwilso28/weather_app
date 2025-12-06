@@ -33,7 +33,7 @@ body {
 #additional-info-container{
   /* border: solid 1px red; */
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 210px 1fr;
 }
 
 #forecast-container {
@@ -43,7 +43,7 @@ body {
   gap: 5px;
 }
 
-#details-container {
+#additional-data-container {
   border: solid 1px red;
   display: grid;
   /* grid-template-columns: repeat(auto-fit, 200px); */
@@ -59,3 +59,7 @@ body {
   width: 200px;
   height: 100px;
 }
+
+/* #additional-info-header {
+  grid-column: 1/3;
+} */
