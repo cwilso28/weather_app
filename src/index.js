@@ -300,7 +300,9 @@ function sunriseSunsetFormat(epoch) {
 
 function todayAdditionalInfo(JSONdata, metric = false) {
     let detailsContainer = document.getElementById('details-container');
-    
+
+    let dataContainer = document.createElement('div');
+    dataContainer.id = "additional-data-container";
 
     let currentConditions = JSONdata.currentConditions;
     
@@ -317,9 +319,6 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let sunriseText = `Sunrise: ${sunriseTimePretty}`;
     let sunriseContainer = createAndWriteDiv(sunriseText);
 
-    let dataContainer = document.createElement('div');
-    dataContainer.id = "additional-data-container";
-
     let sunset = currentConditions.sunsetEpoch;
     let sunsetTimePretty = sunriseSunsetFormat(sunset);
     let sunsetText = `Sunset: ${sunsetTimePretty}`;
@@ -329,20 +328,23 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let tempContainer = document.createElement('div');
     tempContainer.className = 'additional-info';
 
-    let currentTempContainer = document.createElement('div');
+    // let currentTempContainer = document.createElement('div');
     let temp = currentConditions.temp;
     let tempText = `Current Temp: ${tempLabeler(temp, metric)}`
-    currentTempContainer.textContent = tempText;
+    let currentTempContainer = createAndWriteDiv(tempText);
+    // currentTempContainer.textContent = tempText;
 
-    let feelsLikeTempContainer = document.createElement('div');
+    // let feelsLikeTempContainer = document.createElement('div');
     let feelsLikeTemp = currentConditions.feelslike;
     let feelsLikeTempText = `Feels like: ${tempLabeler(feelsLikeTemp, metric)}`;
-    feelsLikeTempContainer.textContent = feelsLikeTempText;
+    // feelsLikeTempContainer.textContent = feelsLikeTempText;
+    let feelsLikeTempContainer = createAndWriteDiv(feelsLikeTempText);
 
-    let humidityContainer = document.createElement('div');
+    // let humidityContainer = document.createElement('div');
     let humidity = currentConditions.humidity;
     let humidityText = `Humidity: ${humidity}%`;
-    humidityContainer.textContent = humidityText;
+    // humidityContainer.textContent = humidityText;
+    let humidityContainer = createAndWriteDiv(humidityText);
 
     // Wind Block
     let windContainer = document.createElement('div');
