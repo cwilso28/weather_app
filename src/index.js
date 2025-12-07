@@ -298,6 +298,13 @@ function sunriseSunsetFormat(epoch) {
     return eventPrettyTime
 }
 
+function writeTextListToDiv(list, container) {
+    for (let i=0; i < list.length; i++) {
+        let div = createAndWriteDiv(list[i]);
+        container.append(div);
+    };
+}
+
 function todayAdditionalInfo(JSONdata, metric = false) {
     let detailsContainer = document.getElementById('details-container');
 
@@ -367,16 +374,15 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let precipContainer = document.createElement('div');
     precipContainer.className = 'additional-info';
 
-    let precipProbabilityContainer = document.createElement('div');
-    let precipProbability = currentConditions.precipprob;
-    let precipProbabilityText = `Precipitation Probability: ${precipProbability}%`
-    precipProbabilityContainer.textContent = precipProbabilityText;
+    let precipList = [];
 
-    let precipTypeContainer = document.createElement('div');
-    let precipType = currentConditions.preciptype;
-    let precipTypeText = `Precipitation Type: ${precipType}`;
-    precipTypeContainer.textContent = precipTypeText;
+    let precipProbabilityText = `Precipitation Probability: ${currentConditions.precipprob}%`
+    precipList.push(precipProbabilityText);
 
+    let precipTypeText = `Precipitation Type: ${currentConditions.preciptype}`;
+    precipList.push(precipTypeText);
+
+    writeTextListToDiv(precipList, precipContainer);
 
     // Other block
     let otherContainer = document.createElement('div');
@@ -405,9 +411,6 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     headerContainer.append(dateContainer);
     headerContainer.append(sunriseContainer);
     headerContainer.append(sunsetContainer);
-
-    precipContainer.append(precipProbabilityContainer);
-    precipContainer.append(precipTypeContainer);
 
     otherContainer.append(UVIndexContainer);
     otherContainer.append(dewPointContainer);
