@@ -2,6 +2,7 @@ import "./styles.css"
 
 import { api_key } from './config.js'
 import { format } from 'date-fns';
+// import { write } from "fs";
 
 let location = '68521'
 
@@ -345,10 +346,7 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let humidityText = `Humidity: ${currentConditions.humidity}%`;
     tempList.push(humidityText);
 
-    for (let i=0; i < tempList.length; i++) {
-        let container = createAndWriteDiv(tempList[i]);
-        tempContainer.append(container);
-    };
+    writeTextListToDiv(tempList, tempContainer);
 
     // Wind Block
     let windContainer = document.createElement('div');
@@ -365,10 +363,7 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let windGustText = `Wind Gusts: ${currentConditions.windgust} mph`;
     windList.push(windGustText);
 
-    for (let i=0; i<windList.length; i++) {
-        let container = createAndWriteDiv(windList[i]);
-        windContainer.append(container);
-    };
+    writeTextListToDiv(windList, windContainer);
 
     // Precipitation Block
     let precipContainer = document.createElement('div');
@@ -388,34 +383,25 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let otherContainer = document.createElement('div');
     otherContainer.className = 'additional-info';
 
-    let UVIndexContainer = document.createElement('div');
-    let UVIndex = currentConditions.uvindex;
-    let UVIndexText = `UV Index: ${UVIndex}`;
-    UVIndexContainer.textContent = UVIndexText;
+    let otherList = [];
 
-    let dewPointContainer = document.createElement('div');
-    let dewPoint = currentConditions.dew;
-    let dewPointText = `Dew Point: ${tempLabeler(dewPoint, metric)}`
-    dewPointContainer.textContent = dewPointText;
+    let UVIndexText = `UV Index: ${currentConditions.uvindex}`;
+    otherList.push(UVIndexText);
+
+    let dewPointText = `Dew Point: ${tempLabeler(currentConditions.dew, metric)}`
+    otherList.push(dewPointText);
     
-    let pressureContainer = document.createElement('div');
-    let pressure = currentConditions.pressure;
-    let pressureText = `Pressure: ${pressure} mb`;
-    pressureContainer.textContent = pressureText;
+    let pressureText = `Pressure: ${currentConditions.pressure} mb`;
+    otherList.push(pressureText);
 
-    let visibilityContainer = document.createElement('div');
-    let visibility = currentConditions.visibility;
-    let visibilityText = `Visibility: ${visibility} mi`;
-    visibilityContainer.textContent = visibilityText;
+    let visibilityText = `Visibility: ${currentConditions.visibility} mi`;
+    otherList.push(visibilityText);
+
+    writeTextListToDiv(otherList, otherContainer);
 
     headerContainer.append(dateContainer);
     headerContainer.append(sunriseContainer);
     headerContainer.append(sunsetContainer);
-
-    otherContainer.append(UVIndexContainer);
-    otherContainer.append(dewPointContainer);
-    otherContainer.append(pressureContainer);
-    otherContainer.append(visibilityContainer);
     
     dataContainer.append(tempContainer);
     dataContainer.append(windContainer);
@@ -424,10 +410,6 @@ function todayAdditionalInfo(JSONdata, metric = false) {
 
     detailsContainer.append(headerContainer);
     detailsContainer.append(dataContainer);
-    // detailsContainer.append(tempContainer);
-    // detailsContainer.append(windContainer);
-    // detailsContainer.append(precipContainer);
-    // detailsContainer.append(otherContainer);
 };
 
 function forecastAdditionalInfo(day) {
