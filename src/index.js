@@ -308,7 +308,6 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     
     // Header
     let headerContainer = document.createElement('div');
-    // headerContainer.className = 'additional-info';
     headerContainer.id = 'additional-info-header';
     
     let dateText = 'Today';
@@ -328,33 +327,19 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let tempContainer = document.createElement('div');
     tempContainer.className = 'additional-info';
 
-    let temp_list = [];
+    let tempList = [];
 
-    // let currentTempContainer = document.createElement('div');
-    // let temp = currentConditions.temp;
     let tempText = `Current Temp: ${tempLabeler(currentConditions.temp, metric)}`;
-    temp_list.push(tempText);
+    tempList.push(tempText);
 
-    // let currentTempContainer = createAndWriteDiv(tempText);
-    // currentTempContainer.textContent = tempText;
-
-    // let feelsLikeTempContainer = document.createElement('div');
-    // let feelsLikeTemp = currentConditions.feelslike;
     let feelsLikeTempText = `Feels like: ${tempLabeler(currentConditions.feelslike, metric)}`;
-    // feelsLikeTempContainer.textContent = feelsLikeTempText;
-    temp_list.push(feelsLikeTempText);
+    tempList.push(feelsLikeTempText);
 
-    // let feelsLikeTempContainer = createAndWriteDiv(feelsLikeTempText);
-
-    // let humidityContainer = document.createElement('div');
-    // let humidity = currentConditions.humidity;
     let humidityText = `Humidity: ${currentConditions.humidity}%`;
-    // humidityContainer.textContent = humidityText;
-    temp_list.push(humidityText);
-    // let humidityContainer = createAndWriteDiv(humidityText);
+    tempList.push(humidityText);
 
-    for (let i=0; i < temp_list.length; i++) {
-        let container = createAndWriteDiv(temp_list[i]);
+    for (let i=0; i < tempList.length; i++) {
+        let container = createAndWriteDiv(tempList[i]);
         tempContainer.append(container);
     };
 
@@ -362,20 +347,21 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let windContainer = document.createElement('div');
     windContainer.className = 'additional-info';
     
-    let windSpeedContainer = document.createElement('div');
-    let windSpeed = currentConditions.windspeed;
-    let windSpeedText = `Wind Speed: ${windSpeed} mph`;
-    windSpeedContainer.textContent = windSpeedText;
+    let windList = [];
 
-    let windDirContainer = document.createElement('div');
-    let windDir = currentConditions.winddir;
-    let windDirText = `Wind Direction: ${windDir}`;
-    windDirContainer.textContent = windDirText;
+    let windSpeedText = `Wind Speed: ${currentConditions.windspeed} mph`;
+    windList.push(windSpeedText);
 
-    let windGustContainer = document.createElement('div');
-    let windGust = currentConditions.windgust;
-    let windGustText = `Wind Gusts: ${windGust} mph`;
-    windGustContainer.textContent = windGustText;
+    let windDirText = `Wind Direction: ${currentConditions.winddir}`;
+    windList.push(windDirText);
+
+    let windGustText = `Wind Gusts: ${currentConditions.windgust} mph`;
+    windList.push(windGustText);
+
+    for (let i=0; i<windList.length; i++) {
+        let container = createAndWriteDiv(windList[i]);
+        windContainer.append(container);
+    };
 
     // Precipitation Block
     let precipContainer = document.createElement('div');
@@ -419,14 +405,6 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     headerContainer.append(dateContainer);
     headerContainer.append(sunriseContainer);
     headerContainer.append(sunsetContainer);
-
-    // tempContainer.append(currentTempContainer);
-    // tempContainer.append(feelsLikeTempContainer);
-    // tempContainer.append(humidityContainer);
-
-    windContainer.append(windSpeedContainer);
-    windContainer.append(windDirContainer);
-    windContainer.append(windGustContainer);
 
     precipContainer.append(precipProbabilityContainer);
     precipContainer.append(precipTypeContainer);
