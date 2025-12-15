@@ -230,7 +230,7 @@ function processForecast(day, index, metric=false) {
 
     let dailyForecastContainer = document.createElement('div');
     dailyForecastContainer.className = 'daily-forecast-container';
-    dailyForecastContainer.id = index;
+    dailyForecastContainer.id = `forecast-${index}`;
 
     let forecastDateOut = document.createElement('div');
     let dateTime = convertEpochToDate(day.datetimeEpoch);
@@ -479,6 +479,26 @@ function forecastAdditionalInfo(day, metric = false) {
     writeTextListToDiv(tempList, tempContainer);
 };
 
+function forecastEventListener(JSONdata, metric = false) {
+    let forecastContainer = document.getElementById('forecast-container');
+    let days = JSONdata.days;
+    forecastContainer.addEventListener("click", (e) => {
+        if (e.target.closest(".daily-forecast-container")) {
+            let targetDay = e.target.closest(".daily-forecast-container");
+            let targetDayIndex = targetDay.id.split("-")[1];
+            clearAdditionalDivs();
+            createAdditionalInfoContainers();
+
+            if (targetDayIndex > 0) {
+                forecastAdditionalInfo(days[targetDayIndex], metric);
+            }
+
+            else {
+                todayAdditionalInfo(JSONdata, metric)
+            }
+        }
+    })
+}
 let devRequestArray = {location: location,
                        date1: '',
                        date2: '',
@@ -489,11 +509,7 @@ async function main() {
     let request = new weatherRequest(devRequestArray);
     let requestData = await request.data;
     processData(requestData, false);
-    let day = requestData.days[1];
-    clearAdditionalDivs();
-    createAdditionalInfoContainers();
-    forecastAdditionalInfo(day);
-
+    forecastEventListener(requestData, false)
 }
 
 main();
