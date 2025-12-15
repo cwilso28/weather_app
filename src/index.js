@@ -354,19 +354,15 @@ function createAdditionalInfoContainers() {
     detailsContainer.append(dataContainer);
 }
 
+function clearAdditionalDivs() {
+    let detailsContainer = document.getElementById('details-container');
+    detailsContainer.textContent = '';
+}
+
 function todayAdditionalInfo(JSONdata, metric = false) {
-    // let headerContainer = document.getElementById('additional-info-header');
-    // let detailsContainer = document.getElementById('details-container');
-
-    // let dataContainer = document.createElement('div');
-    // dataContainer.id = "additional-data-container";
-
     let currentConditions = JSONdata.currentConditions;
     
     // Header
-    // let headerContainer = document.createElement('div');
-    // headerContainer.id = 'additional-info-header';
-    
     let dateContainer = document.getElementById('additional-header-date-container');
     let dateText = 'Today';
     dateContainer.textContent = dateText;
@@ -383,13 +379,7 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let sunsetText = `Sunset: ${sunsetTimePretty}`;
     sunsetContainer.textContent = sunsetText;
 
-    // headerContainer.append(dateContainer);
-    // headerContainer.append(sunriseContainer);
-    // headerContainer.append(sunsetContainer);
     // Temperature and Humidity Block
-    // let tempContainer = document.createElement('div');
-    // tempContainer.className = 'additional-info';
-
     let tempContainer = document.getElementById('additional-data-temp-container');
 
     let tempList = [];
@@ -406,9 +396,6 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     writeTextListToDiv(tempList, tempContainer);
 
     // Wind Block
-    // let windContainer = document.createElement('div');
-    // windContainer.className = 'additional-info';
-
     let windContainer = document.getElementById('additional-data-wind-container');
     
     let windList = [];
@@ -425,9 +412,6 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     writeTextListToDiv(windList, windContainer);
 
     // Precipitation Block
-    // let precipContainer = document.createElement('div');
-    // precipContainer.className = 'additional-info';
-
     let precipContainer = document.getElementById('additional-data-precip-container');
 
     let precipList = [];
@@ -460,8 +444,39 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     writeTextListToDiv(otherList, otherContainer);
 };
 
-function forecastAdditionalInfo(day) {
-    pass
+function forecastAdditionalInfo(day, metric = false) {
+    // Header
+    let dateContainer = document.getElementById('additional-header-date-container');
+    let dateTime = convertEpochToDate(day.datetimeEpoch);
+    let formattedDateTime = prettyDay(dateTime);
+    let dateText = formattedDateTime;
+    dateContainer.textContent = dateText;
+
+    let sunriseContainer = document.getElementById('additional-header-sunrise-container');
+    let sunriseTime = sunriseSunsetFormat(day.sunriseEpoch);
+    let sunriseText = `Sunrise: ${sunriseTime}`;
+    sunriseContainer.textContent = sunriseText;
+
+    let sunsetContainer = document.getElementById('additional-header-sunset-container');
+    let sunsetTime = sunriseSunsetFormat(day.sunsetEpoch);
+    let sunsetText = `Sunset: ${sunsetTime}`;
+    sunsetContainer.textContent = sunsetText;
+    
+    //Temperature and Humidity Block
+    let tempContainer = document.getElementById('additional-data-temp-container');
+
+    let tempList = [];
+
+    let tempHiText = `Hi: ${tempLabeler(day.tempmax, metric)}`;
+    tempList.push(tempHiText);
+
+    let tempLoText = `Lo: ${tempLabeler(day.tempmin, metric)}`;
+    tempList.push(tempLoText);
+
+    let humidityText = `Humidity: ${day.humidity}`;
+    tempList.push(humidityText);
+
+    writeTextListToDiv(tempList, tempContainer);
 };
 
 let devRequestArray = {location: location,
@@ -474,6 +489,11 @@ async function main() {
     let request = new weatherRequest(devRequestArray);
     let requestData = await request.data;
     processData(requestData, false);
+    let day = requestData.days[1];
+    clearAdditionalDivs();
+    createAdditionalInfoContainers();
+    forecastAdditionalInfo(day);
+
 }
 
 main();
