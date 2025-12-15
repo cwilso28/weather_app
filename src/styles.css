@@ -63,3 +63,7 @@ body {
 /* #additional-info-header {
   grid-column: 1/3;
 } */
+
+.daily-forecast-container:hover {
+  border: solid 1px red;
+}
