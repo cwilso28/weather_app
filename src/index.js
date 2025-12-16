@@ -306,6 +306,43 @@ function writeTextListToDiv(list, container) {
     };
 }
 
+function findWindMax(day) {
+    let windHourly = [];
+    let hours = day.hours;
+
+    for (let i=0;i<hours.length; i++) {
+        windHourly.push(hours[i].windspeed);
+        
+    }
+    let windMax = Math.max(...windHourly);
+    return windMax;
+}
+
+function findWindMin(day) {
+    let windHourly = [];
+    let hours = day.hours;
+
+    for (let i=0;i<hours.length;i++) {
+        windHourly.push(hours[i].windspeed);
+    }
+    // console.log(windHourly);
+    let windMin = Math.min(...windHourly);
+
+    return windMin;
+}
+
+function findGustMax(day) {
+    let gustHourly = [];
+    let hours = day.hours;
+
+    for (let i=0;i<hours.length; i++) {
+        gustHourly.push(hours[i].windgust);
+        
+    }
+    let gustMax = Math.max(...gustHourly);
+    return gustMax;
+}
+
 function createAdditionalInfoContainers() {
     let detailsContainer = document.getElementById('details-container');
 
@@ -419,7 +456,14 @@ function todayAdditionalInfo(JSONdata, metric = false) {
     let precipProbabilityText = `Precipitation Probability: ${currentConditions.precipprob}%`
     precipList.push(precipProbabilityText);
 
-    let precipTypeText = `Precipitation Type: ${currentConditions.preciptype}`;
+    let precipType = '';
+    if (currentConditions.preciptype) {
+        precipType = currentConditions.preciptype;
+    }
+    else {
+        precipType = 'None';
+    }
+    let precipTypeText = `Precipitation Type: ${precipType}`;
     precipList.push(precipTypeText);
 
     writeTextListToDiv(precipList, precipContainer);
@@ -477,6 +521,45 @@ function forecastAdditionalInfo(day, metric = false) {
     tempList.push(humidityText);
 
     writeTextListToDiv(tempList, tempContainer);
+
+    // Wind Block
+    let windContainer = document.getElementById('additional-data-wind-container');
+    let windList = [];
+
+    let windMax = findWindMax(day);
+    let windMin = findWindMin(day);
+    let windText = '';
+    if (windMax > 0) {
+        windText = `Wind Speend: ${windMin} to ${windMax} mph`
+    }
+    else {
+        windText = `${windMax} mph`
+    }
+    windList.push(windText);
+    
+    let gustMaxText = `Wind Gusts: Up to ${findGustMax(day)} mph`;
+    windList.push(gustMaxText);
+
+    writeTextListToDiv(windList, windContainer)
+
+    // Precipitation
+    let precipContainer = document.getElementById('additional-data-precip-container');
+    let precipList = [];
+
+    let precipProbText = `Precipitation Probability: ${day.precipprob}%`
+    precipList.push(precipProbText);
+
+    let precipType = '';
+    if (day.preciptype) {
+        precipType = day.preciptype;
+    }
+    else {
+        precipType = `None`;
+    }
+    let precipTypeText = `Precipitation Type: ${precipType}`;
+    precipList.push(precipTypeText);
+
+    writeTextListToDiv(precipList, precipContainer);
 };
 
 function forecastEventListener(JSONdata, metric = false) {
