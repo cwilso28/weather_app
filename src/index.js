@@ -530,7 +530,7 @@ function forecastAdditionalInfo(day, metric = false) {
     let windMin = findWindMin(day);
     let windText = '';
     if (windMax > 0) {
-        windText = `Wind Speend: ${windMin} to ${windMax} mph`
+        windText = `Wind Speed: ${windMin} to ${windMax} mph`
     }
     else {
         windText = `${windMax} mph`
