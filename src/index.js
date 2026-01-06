@@ -562,6 +562,31 @@ function forecastAdditionalInfo(day, metric = false) {
     writeTextListToDiv(precipList, precipContainer);
 };
 
+function createSearch() {
+    let searchContainer = document.getElementById('search-container');
+    let formContainer = document.createElement('form');
+    let button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = 'Search';
+
+    let searchBoxContainer = document.createElement('div');
+
+    let searchBoxLabel = document.createElement('label');
+    searchBoxLabel.for = 'location_request';
+
+    let searchBoxInput = document.createElement('input');
+    searchBoxInput.type = 'text';
+    searchBoxInput.name = 'location_request';
+    searchBoxInput.id = 'location_request';
+
+    searchBoxContainer.append(searchBoxLabel);
+    searchBoxContainer.append(searchBoxInput);
+
+    formContainer.append(button);
+    formContainer.append(searchBoxContainer);
+    searchContainer.append(formContainer);
+}
+
 function forecastEventListener(JSONdata, metric = false) {
     let forecastContainer = document.getElementById('forecast-container');
     let days = JSONdata.days;
@@ -591,6 +616,7 @@ let devRequestArray = {location: location,
 async function main() {
     let request = new weatherRequest(devRequestArray);
     let requestData = await request.data;
+    createSearch();
     processData(requestData, false);
     forecastEventListener(requestData, false)
 }
