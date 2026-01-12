@@ -568,6 +568,7 @@ function createSearch() {
     let button = document.createElement('button');
     button.type = 'button';
     button.textContent = 'Search';
+    button.id = 'search-button';
 
     let searchBoxContainer = document.createElement('div');
 
@@ -581,10 +582,16 @@ function createSearch() {
 
     searchBoxContainer.append(searchBoxLabel);
     searchBoxContainer.append(searchBoxInput);
+    searchBoxContainer.append(button);
 
-    formContainer.append(button);
     formContainer.append(searchBoxContainer);
+    // formContainer.append(button);
+    
     searchContainer.append(formContainer);
+}
+
+function refreshPageNewLocation() {
+    pass
 }
 
 function forecastEventListener(JSONdata, metric = false) {
@@ -607,6 +614,16 @@ function forecastEventListener(JSONdata, metric = false) {
         }
     })
 }
+
+function searchEventListener() {
+    let button = document.getElementById('search-button');
+    let searchBox = document.getElementById('location_request');
+
+    button.addEventListener('click', (e) => {
+        let searchBoxContent = searchBox.value;
+        console.log(searchBoxContent);
+    })
+}
 let devRequestArray = {location: location,
                        date1: '',
                        date2: '',
@@ -618,7 +635,8 @@ async function main() {
     let requestData = await request.data;
     createSearch();
     processData(requestData, false);
-    forecastEventListener(requestData, false)
+    forecastEventListener(requestData, false);
+    searchEventListener();
 }
 
 main();
