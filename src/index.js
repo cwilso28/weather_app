@@ -594,6 +594,12 @@ function refreshPageNewLocation() {
     pass
 }
 
+function createStartUpPage() {
+    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    let locationFromTimeZone = timeZone.replace('/','');
+    console.log(locationFromTimeZone);
+}
+
 function forecastEventListener(JSONdata, metric = false) {
     let forecastContainer = document.getElementById('forecast-container');
     let days = JSONdata.days;
@@ -631,6 +637,7 @@ let devRequestArray = {location: location,
                        };
 
 async function main() {
+    createStartUpPage();
     let request = new weatherRequest(devRequestArray);
     let requestData = await request.data;
     createSearch();
